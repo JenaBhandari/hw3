@@ -2,6 +2,7 @@
 #define LLREC_H
 #ifndef NULL
 #define NULL 0
+
 #endif
 
 /**
@@ -49,6 +50,8 @@ struct Node
  */
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 
+
+
 /**
  * Given a linked list pointed to by head, removes (filters out) nodes
  * whose value does not meet the criteria given by the predicate
@@ -72,10 +75,15 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred);
 
+
+
+
 //*****************************************************************************
 // Since template implementations should be in a header file, we will
 // implement the above function now.
 //*****************************************************************************
+
+
 
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred)
@@ -83,6 +91,28 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
+
+    if (head == nullptr)
+    {
+        return nullptr;
+    }
+
+    Node* upNext = head->next;
+
+    Node* good = llfilter(upNext, pred);
+    
+    //if delete we should value, 
+    if (pred(head->val))
+    {
+        delete head;
+        return good;
+    }
+    //if we keep value
+	else
+    {
+        head->next = good;
+        return head;
+    }
 
 
 }
